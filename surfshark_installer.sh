@@ -8,29 +8,44 @@ This program is free software. It comes without any warranty, to
      * http://www.wtfpl.net/ for more details.
 END_COMMENT
 
-VERSION=1.1.0
-DISTRO=`cat /etc/os-release | grep '^NAME' | cut -d\= -f2-  | sed 's/\"//g'`
 
-echo "Installing Openvpn Dependency"
-if [[ $DISTRO == *"openSUSE"* ]]; then
+VERSION=1.1.0
+DISTRONAME="$(cat /etc/os-release | grep '^NAME' | cut -d\= -f2-  | sed 's/\"//g')"
+
+
+echo "Installing Openvpn Dependency..."
+if [[ -n "$(echo $DISTRONAME | grep -oi opensuse)" ]]; then
     sudo zypper in openvpn
-elif [[ $DISTRO == *"Gentoo"* ]]; then
+elif [[ -n "$(echo $DISTRONAME | grep -oi gentoo)" ]]; then
     sudo emerge -v net-vpn/openvpn
-elif [[ $DISTRO == *"Fedora"* ]]; then
+elif [[ -n "$(echo $DISTRONAME | grep -oi fedora)" ]]; then
     sudo dnf install openvpn
+elif [[ -n "$(echo $DISTRONAME | grep -oiE 'ubuntu|debian')" ]]; then
+    sudo apt install openvpn
+elif [[ -n "$(echo $DISTRONAME | grep -oi arch)" ]]; then
+    sudo pacman -S openvpn
+else
+    echo "Unknown distro, aborting..."
 fi
 
 
 
 echo "Downloading Surfshark Deb Package"
+_tmp="$(mktemp -d)"
+pushd ${_tmp}
 wget -O surfshark.deb "https://ocean.surfshark.com/debian/pool/main/s/surfshark-vpn/surfshark-vpn_${VERSION}_amd64.deb"
+
+
 
 echo "Done, Installing Now"
 mkdir surfshark_work
 ar x --output surfshark_work surfshark.deb
-cd work
+cd surfshark_work
 tar xvf data.tar.xz
-sudo install -Dm 755 "usr/bin/surfshark-vpn" -t "/usr/bin/"
-cd ..
-rm -rf work
+sudo install -Dm 755 "usr/bin/surfshark-vpn" -t "/usr/local/bin/"
+popd
+rm -rf ${_tmp}
 echo "All Done"
+
+
+
