@@ -26,8 +26,8 @@ echo "Downloading Surfshark Deb Package"
 wget -O surfshark.deb "https://ocean.surfshark.com/debian/pool/main/s/surfshark-vpn/surfshark-vpn_${VERSION}_amd64.deb"
 
 echo "Done, Installing Now"
-mkdir work
-ar x --output work surfshark.deb
+mkdir surfshark_work
+ar x --output surfshark_work surfshark.deb
 cd work
 tar xvf data.tar.xz
 sudo install -Dm 755 "usr/bin/surfshark-vpn" -t "/usr/bin/"
