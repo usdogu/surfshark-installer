@@ -17,15 +17,15 @@ echo "Installing Openvpn Dependency..."
 if [[ -n "$(echo $DISTRONAME | grep -oi opensuse)" ]]; then
     sudo zypper in openvpn
 elif [[ -n "$(echo $DISTRONAME | grep -oi gentoo)" ]]; then
-    sudo emerge -v net-vpn/openvpn
+    sudo emerge -av net-vpn/openvpn
 elif [[ -n "$(echo $DISTRONAME | grep -oi fedora)" ]]; then
     sudo dnf install openvpn
-elif [[ -n "$(echo $DISTRONAME | grep -oiE 'ubuntu|debian')" ]]; then
-    sudo apt install openvpn
 elif [[ -n "$(echo $DISTRONAME | grep -oi arch)" ]]; then
-    sudo pacman -S openvpn
+    echo "Just Install surfshark-vpn from AUR"
+    exit 0
 else
     echo "Unknown distro, aborting..."
+    exit 1
 fi
 
 
