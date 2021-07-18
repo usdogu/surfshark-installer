@@ -21,8 +21,10 @@ elif [[ -n "$(echo $DISTRONAME | grep -oi gentoo)" ]]; then
 elif [[ -n "$(echo $DISTRONAME | grep -oi fedora)" ]]; then
     sudo dnf install openvpn
 elif [[ -n "$(echo $DISTRONAME | grep -oi arch)" ]]; then
-    echo "Just Install surfshark-vpn from AUR"
+    echo "Just install surfshark-vpn from AUR"
     exit 0
+elif [[ -n "$(echo $DISTRONAME | grep -oi void)" ]]; then
+    sudo xbps-install -S openvpn
 else
     echo "Unknown distro, aborting..."
     exit 1
