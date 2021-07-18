@@ -2,7 +2,7 @@
 #+AUTHOR: Doğu Us
 
 * Information
-This script only supports OpenSuse, Gentoo and Fedora. Feel free to open a PR for another OS support
+This script only supports OpenSuse, Gentoo, Void and Fedora. Feel free to open a PR for another OS support
 
 * How To Use
 #+begin_src shell
