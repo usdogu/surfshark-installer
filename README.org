@@ -5,9 +5,9 @@
 This script only supports OpenSuse, Gentoo, Void and Fedora. Feel free to open a PR for another OS support
 
 * How To Use
-#+begin_src shell
+#+BEGIN_SRC shell
 git clone https://github.com/usdogu/surfshark-installer.git
 cd surfshark-installer
 chmod +x surfshark_installer.sh
 ./surfshark_installer.sh
-#+end_src
+#+END_SRC

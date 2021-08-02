@@ -8,6 +8,10 @@ This program is free software. It comes without any warranty, to
      * http://www.wtfpl.net/ for more details.
 END_COMMENT
 
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit 1
+fi
 
 VERSION=1.1.0
 DISTRONAME="$(cat /etc/os-release | grep '^NAME' | cut -d\= -f2-  | sed 's/\"//g')"
@@ -15,16 +19,16 @@ DISTRONAME="$(cat /etc/os-release | grep '^NAME' | cut -d\= -f2-  | sed 's/\"//g
 
 echo "Installing Openvpn Dependency..."
 if [[ -n "$(echo $DISTRONAME | grep -oi opensuse)" ]]; then
-    sudo zypper in openvpn
+    zypper in openvpn
 elif [[ -n "$(echo $DISTRONAME | grep -oi gentoo)" ]]; then
-    sudo emerge -av net-vpn/openvpn
+    emerge -av net-vpn/openvpn
 elif [[ -n "$(echo $DISTRONAME | grep -oi fedora)" ]]; then
-    sudo dnf install openvpn
+    dnf install openvpn
 elif [[ -n "$(echo $DISTRONAME | grep -oi arch)" ]]; then
     echo "Just install surfshark-vpn from AUR"
     exit 0
 elif [[ -n "$(echo $DISTRONAME | grep -oi void)" ]]; then
-    sudo xbps-install -S openvpn
+    xbps-install -S openvpn
 else
     echo "Unknown distro, aborting..."
     exit 1
@@ -46,6 +50,3 @@ sudo install -Dm 755 "usr/bin/surfshark-vpn" -t "/usr/local/bin/"
 popd
 rm -rf ${_tmp}
 echo "All Done"
-
-
-
